@@ -1,6 +1,13 @@
 import React, { useEffect, useRef } from "react";
 
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { useFormContext } from "react-hook-form";
 import DraggableFlatList, {
@@ -22,6 +29,7 @@ import {
 import { IEmployer } from "../../types/IGroup";
 import EmployerCard from "../EmployerCard";
 import FormInput from "../FormInput";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function GroupForm() {
   const { control, setValue, trigger } = useFormContext();
@@ -70,7 +78,10 @@ export default function GroupForm() {
         placeholder={"Enter a group name"}
       />
       <TouchableOpacity
-        onPress={() => modalizeRef.current?.open()}
+        onPress={() => {
+          Keyboard.dismiss();
+          modalizeRef.current?.open();
+        }}
         style={styles.addBtn}
       >
         <Text style={styles.addBtnText}>{AddMemberIcon} Add a Member</Text>
@@ -97,7 +108,10 @@ export default function GroupForm() {
           modalStyle={{ marginTop: 200, padding: 10, zIndex: 999999999 }}
           scrollViewProps={{
             showsVerticalScrollIndicator: false,
-            contentContainerStyle: { paddingHorizontal: 5, paddingBottom: 260 },
+            contentContainerStyle: {
+              paddingHorizontal: 5,
+              paddingBottom: 260,
+            },
           }}
         >
           {employeesList.map(employer => (

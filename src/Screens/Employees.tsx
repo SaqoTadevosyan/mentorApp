@@ -1,22 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-
-import { useDispatch } from "react-redux";
+import { StyleSheet, Text, View } from "react-native";
 
 import EmployeesList from "../Components/EmployeesList";
 import MainLayout from "../Layouts/MainLayout";
-import { getEmployees } from "../services/groups";
-import { setEmployees } from "../store/slices/groups";
 
 export default function Employees() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const employees = getEmployees();
-    dispatch(setEmployees(employees));
-  }, []);
-
   return (
     <MainLayout>
       <View style={{ paddingHorizontal: 16 }}>

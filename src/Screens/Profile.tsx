@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Alert,
@@ -19,7 +19,8 @@ import { useDispatch, useSelector } from "react-redux";
 import GroupCard from "../Components/GroupCard";
 import { MoreIcon, ShareIcon } from "../Icons/ProfileIcons";
 import MainLayout from "../Layouts/MainLayout";
-import { groupsSelector } from "../store/slices/groups";
+import { getEmployees } from "../services/groups";
+import { groupsSelector, setEmployees } from "../store/slices/groups";
 import { logOut, userProfileSelector } from "../store/slices/profile";
 import { IGroup } from "../types/IGroup";
 import { IUser } from "../types/IProfile";
@@ -39,6 +40,11 @@ export default function Profile() {
       Alert.alert(error.message);
     }
   };
+
+  useEffect(() => {
+    const employees = getEmployees();
+    dispatch(setEmployees(employees));
+  }, []);
 
   return (
     <MainLayout>

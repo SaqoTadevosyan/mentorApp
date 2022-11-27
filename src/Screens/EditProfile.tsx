@@ -47,7 +47,10 @@ export default function EditProfile() {
           <Text style={styles.pageTitle}>Edit Profile</Text>
           <View style={{ width: 20 }} />
         </View>
-        <ScrollView style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={{ paddingBottom: 40 }}
+        >
           <FormProvider {...methods}>
             <ProfileForm />
           </FormProvider>
