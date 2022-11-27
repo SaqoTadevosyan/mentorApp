@@ -1,7 +1,7 @@
 export interface IUser {
   firstName: string;
   lastName: string;
-  location: string;
+  city: string;
   profilePicture: string;
   department: string;
   jobTitle: string;

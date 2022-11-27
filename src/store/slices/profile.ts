@@ -9,7 +9,7 @@ const initialState: stateType = {
   userInfo: {
     firstName: "Jovi",
     lastName: "Daniel",
-    location: "Yerevan",
+    city: "Yerevan",
     jobTitle: "UX Designer",
     department: "first",
     profilePicture:

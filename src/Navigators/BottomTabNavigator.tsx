@@ -8,6 +8,7 @@ import TabBar from "../Components/TabBar";
 import { HomeIcon, MenuIcon } from "../Icons/TabBarIcons";
 import ProfileNavigator from "./ProfileNavigator";
 import Employees from "../Screens/Employees";
+import CreateGroup from "../Screens/CreateGroup";
 
 const MainStack = createBottomTabNavigator();
 
@@ -28,7 +29,7 @@ export default function BottomTabNavigator() {
         />
         <MainStack.Screen
           name="Create"
-          component={ProfileNavigator}
+          component={CreateGroup}
           options={{
             tabBarIcon: <PlusButton />,
             tabBarLabel: "",
