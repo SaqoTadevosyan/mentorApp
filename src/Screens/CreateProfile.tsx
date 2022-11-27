@@ -14,13 +14,12 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 import ProfileForm from "../Components/Forms/ProfileForm";
-import { LeftIcon } from "../Icons/ProfileIcons";
 import MainLayout from "../Layouts/MainLayout";
-import { setUserInfo, userProfileSelector } from "../store/slices/profile";
+import { saveUser, userProfileSelector } from "../store/slices/profile";
 import { IUser } from "../types/IProfile";
 import { profileSchema } from "../validation/profileSchema";
 
-export default function EditProfile() {
+export default function CreateProfile() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const userProfile: IUser = useSelector(userProfileSelector);
@@ -33,19 +32,17 @@ export default function EditProfile() {
 
   const submitForm = () => {
     const data = methods.getValues();
-    dispatch(setUserInfo(data));
-    methods.reset({ ...data });
+    dispatch(saveUser(data));
+    console.log("awdawd");
+
+    navigation.navigate("ProfileStack", { screen: "Profile" });
   };
 
   return (
     <MainLayout>
       <>
         <View style={styles.header}>
-          <TouchableOpacity onPress={navigation.goBack}>
-            <LeftIcon />
-          </TouchableOpacity>
-          <Text style={styles.pageTitle}>Edit Profile</Text>
-          <View style={{ width: 20 }} />
+          <Text style={styles.pageTitle}>Create Profile</Text>
         </View>
         <ScrollView style={styles.container}>
           <FormProvider {...methods}>
@@ -60,7 +57,7 @@ export default function EditProfile() {
             onPress={submitForm}
             disabled={!methods.formState.isDirty || !methods.formState.isValid}
           >
-            <Text style={styles.buttonText}>Update Profile</Text>
+            <Text style={styles.buttonText}>Create Profile</Text>
           </TouchableOpacity>
         </ScrollView>
       </>
@@ -73,7 +70,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 16,
   },

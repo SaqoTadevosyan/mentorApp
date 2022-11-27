@@ -1,24 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  getFocusedRouteNameFromRoute,
+  NavigationContainer,
+} from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 import PlusButton from "../Components/PlusButton";
 import TabBar from "../Components/TabBar";
 import { HomeIcon, MenuIcon } from "../Icons/TabBarIcons";
-import ProfileNavigator from "./ProfileNavigator";
 import Employees from "../Screens/Employees";
-import CreateGroup from "../Screens/CreateGroup";
+import { userProfileSelector } from "../store/slices/profile";
 import GroupNavigator from "./GroupNavigator";
+import ProfileNavigator from "./ProfileNavigator";
 
 const MainStack = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
+  const isAuthenticated = useSelector(userProfileSelector);
+
   return (
     <NavigationContainer>
       <MainStack.Navigator
-        tabBar={props => <TabBar {...props} />}
-        initialRouteName="Profile"
+        tabBar={props => {
+          if (!isAuthenticated) {
+            return null;
+          }
+          return <TabBar {...props} />;
+        }}
+        initialRouteName="ProfileStack"
         screenOptions={{
           headerShown: false,
         }}

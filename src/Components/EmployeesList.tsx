@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 
 import { employeesSelector } from "../store/slices/groups";
-import { IEmployer } from "../types/IProfile";
+import { IEmployer } from "../types/IGroup";
 import EmployerCard from "./EmployerCard";
 
 export default function EmployeesList() {
@@ -19,7 +19,11 @@ export default function EmployeesList() {
       {employeesList?.length > 0 ? (
         <View>
           {employeesList.map(employer => (
-            <EmployerCard employer={employer} showSelectButton={false} />
+            <EmployerCard
+              employer={employer}
+              showSelectButton={false}
+              key={employer.email}
+            />
           ))}
         </View>
       ) : (
