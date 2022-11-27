@@ -1,21 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { IUser } from "../../types/IProfile";
 
 type stateType = {
-  userInfo: IUser;
+  userInfo: IUser | null;
 };
 const initialState: stateType = {
-  userInfo: {
-    firstName: "Jovi",
-    lastName: "Daniel",
-    city: "Yerevan",
-    jobTitle: "UX Designer",
-    department: "first",
-    profilePicture:
-      "https://images.unsplash.com/photo-1628563694622-5a76957fd09c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE2fHx8ZW58MHx8fHw%3D&w=1000&q=80",
-  },
+  userInfo: null,
 };
+
+export const getUser = createAsyncThunk("user/get", async () => {
+  const res = await AsyncStorage.getItem("user");
+  return res;
+});
+
+export const saveUser = createAsyncThunk("user/create", async (user: IUser) => {
+  await AsyncStorage.setItem("user", JSON.stringify(user));
+  return user;
+});
+
+export const logOut = createAsyncThunk("user/logOut", async (user: IUser) => {
+  await AsyncStorage.removeItem("user");
+  return user;
+});
 
 export const profileSlice = createSlice({
   name: "profile",
@@ -24,6 +32,17 @@ export const profileSlice = createSlice({
     setUserInfo: (state, action) => {
       state.userInfo = action.payload;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(saveUser.fulfilled, (state, action) => {
+      state.userInfo = action.payload;
+    });
+    builder.addCase(getUser.fulfilled, (state, action) => {
+      state.userInfo = JSON.parse(action.payload);
+    });
+    builder.addCase(logOut.fulfilled, state => {
+      state.userInfo = null;
+    });
   },
 });
 
