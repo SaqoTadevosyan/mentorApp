@@ -22,6 +22,7 @@ export const saveUser = createAsyncThunk("user/create", async (user: IUser) => {
 
 export const logOut = createAsyncThunk("user/logOut", async (user: IUser) => {
   await AsyncStorage.removeItem("user");
+  await AsyncStorage.removeItem("groups");
   return user;
 });
 

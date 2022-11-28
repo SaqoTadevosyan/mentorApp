@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { IEmployer, IGroup } from "../../types/IGroup";
+import { logOut } from "./profile";
 
 type stateType = {
   employees: IEmployer[];
@@ -95,6 +96,9 @@ export const profileSlice = createSlice({
     });
     builder.addCase(updateGroup.fulfilled, (state, action) => {
       state.groups = action.payload;
+    });
+    builder.addCase(logOut.fulfilled, state => {
+      state.groups = [];
     });
   },
 });
