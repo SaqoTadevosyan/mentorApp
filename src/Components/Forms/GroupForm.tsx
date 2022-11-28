@@ -90,12 +90,16 @@ export default function GroupForm() {
           flex: 1,
         }}
       >
+        {selectedEmployees?.length > 1 && (
+          <Text style={styles.hintText}>Long press for reorder</Text>
+        )}
+
         <DraggableFlatList
           keyExtractor={item => item.email}
           data={selectedEmployees}
           onDragEnd={({ data }) => dispatch(setSelectedEmployees(data))}
           renderItem={renderItem}
-          style={{ padding: 10 }}
+          style={{ paddingHorizontal: 10 }}
           showsVerticalScrollIndicator={false}
         />
       </View>
@@ -161,5 +165,12 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: "#a185ff",
+  },
+  hintText: {
+    fontFamily: "Avenir-Heavy",
+    color: "#2D4379",
+    fontSize: 11,
+    marginLeft: 10,
+    marginTop: 5,
   },
 });
