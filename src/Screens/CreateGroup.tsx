@@ -33,9 +33,7 @@ export default function CreateGroup() {
 
   return (
     <MainLayout>
-      <View
-        style={{ flex: 1, justifyContent: "space-between", paddingBottom: 20 }}
-      >
+      <View style={styles.container}>
         <View style={{ paddingHorizontal: 16, flex: 1 }}>
           <Text style={[styles.headerTitle]}>Create a Group</Text>
           <FormProvider {...methods}>
@@ -58,6 +56,7 @@ export default function CreateGroup() {
 }
 
 const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: "space-between", paddingBottom: 20 },
   headerTitle: {
     fontFamily: "Avenir-Heavy",
     color: "#0D253C",

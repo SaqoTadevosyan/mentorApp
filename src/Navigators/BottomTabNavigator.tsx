@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  getFocusedRouteNameFromRoute,
-  NavigationContainer,
-} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
 import PlusButton from "../Components/PlusButton";

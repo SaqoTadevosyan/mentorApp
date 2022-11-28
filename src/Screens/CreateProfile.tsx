@@ -10,6 +10,7 @@ import {
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,10 +18,12 @@ import ProfileForm from "../Components/Forms/ProfileForm";
 import MainLayout from "../Layouts/MainLayout";
 import { saveUser, userProfileSelector } from "../store/slices/profile";
 import { IUser } from "../types/IProfile";
+import { RootStackParamList } from "../types/IRoute";
 import { profileSchema } from "../validation/profileSchema";
 
 export default function CreateProfile() {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const dispatch = useDispatch();
   const userProfile: IUser = useSelector(userProfileSelector);
 
@@ -33,8 +36,6 @@ export default function CreateProfile() {
   const submitForm = () => {
     const data = methods.getValues();
     dispatch(saveUser(data));
-    console.log("awdawd");
-
     navigation.navigate("ProfileStack", { screen: "Profile" });
   };
 

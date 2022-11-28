@@ -2,24 +2,13 @@ import React from "react";
 
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
-import {
-  Control,
-  FieldValues,
-  FieldError,
-  Merge,
-  FieldErrorsImpl,
-  Controller,
-} from "react-hook-form";
+import { Control, FieldValues, FieldError, Controller } from "react-hook-form";
 
 interface Props {
   control: Control<FieldValues>;
   name: string;
   label?: string;
-  errorMessage?:
-    | string
-    | FieldError
-    | Merge<FieldError, FieldErrorsImpl<any>>
-    | undefined;
+  errorMessage?: string | FieldError | undefined;
   placeholder?: string;
 }
 
@@ -48,7 +37,9 @@ export default function FormInput({
         }}
       />
 
-      {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
+      {errorMessage && (
+        <Text style={styles.errorMessage}>{`${errorMessage}`}</Text>
+      )}
     </View>
   );
 }

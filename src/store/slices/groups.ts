@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { IEmployer, IGroup } from "../../types/IGroup";
 
@@ -14,6 +15,36 @@ const initialState: stateType = {
   selectedEmployees: [],
   selectedGroupId: "",
 };
+
+export const getGroups = createAsyncThunk("group/get", async group => {
+  const res = await AsyncStorage.getItem("groups");
+  const groups = res ? JSON.parse(res) : [];
+  return groups;
+});
+
+export const createGroup = createAsyncThunk("group/create", async group => {
+  const res = await AsyncStorage.getItem("groups");
+  const groups = res ? JSON.parse(res) : [];
+  groups.push(group);
+  await AsyncStorage.setItem("groups", JSON.stringify(groups));
+  return groups;
+});
+
+export const updateGroup = createAsyncThunk(
+  "group/update",
+  async (group: IGroup) => {
+    const groupsJSON = await AsyncStorage.getItem("groups");
+    if (groupsJSON) {
+      const groups = JSON.parse(groupsJSON);
+      const index = groups.findIndex((item: IGroup) => item.id === group.id);
+      if (index !== -1) {
+        groups[index] = group;
+      }
+      await AsyncStorage.setItem("groups", JSON.stringify(groups));
+      return groups;
+    }
+  },
+);
 
 export const profileSlice = createSlice({
   name: "groups",
@@ -34,10 +65,7 @@ export const profileSlice = createSlice({
       );
       state.selectedEmployees.splice(index, 1);
     },
-    createGroup: (state, action) => {
-      state.groups.push(action.payload);
-      state.selectedEmployees = [];
-    },
+
     updateGroup: (state, action) => {
       const index = state.groups.findIndex(
         group => group.id === action.payload.id,
@@ -57,6 +85,18 @@ export const profileSlice = createSlice({
       }
     },
   },
+  extraReducers: builder => {
+    builder.addCase(getGroups.fulfilled, (state, action) => {
+      state.groups = action.payload;
+    });
+    builder.addCase(createGroup.fulfilled, (state, action) => {
+      state.groups = action.payload;
+      state.selectedEmployees = [];
+    });
+    builder.addCase(updateGroup.fulfilled, (state, action) => {
+      state.groups = action.payload;
+    });
+  },
 });
 
 export const {
@@ -64,17 +104,17 @@ export const {
   addSelectedEmployer,
   removeSelectedEmployer,
   setSelectedEmployees,
-  createGroup,
   setSelectedGroupId,
-  updateGroup,
 } = profileSlice.actions;
 
 //Selectors
-export const groupsSelector = state => state.groups.groups;
-export const selectedGroupSelector = state =>
-  state.groups.groups.find(group => group.id === state.groups.selectedGroupId);
-export const employeesSelector = state => state.groups.employees;
-export const selectedEmployeesSelector = state =>
+export const groupsSelector = (state: any) => state.groups.groups;
+export const selectedGroupSelector = (state: any) =>
+  state.groups.groups.find(
+    (group: IGroup) => group.id === state.groups.selectedGroupId,
+  );
+export const employeesSelector = (state: any) => state.groups.employees;
+export const selectedEmployeesSelector = (state: any) =>
   state.groups.selectedEmployees;
 
 export default profileSlice.reducer;

@@ -1,22 +1,26 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 
 import { DownArrowIcon, UpArrowIcon } from "../Icons/ProfileIcons";
 import { setSelectedGroupId } from "../store/slices/groups";
 import { IGroup } from "../types/IGroup";
+import { RootStackParamList } from "../types/IRoute";
 
 export default function GroupCard({ employees, groupName, id }: IGroup) {
   const [showAllInfo, setShowAllInfo] = useState(false);
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const handleEditGroup = () => {
     dispatch(setSelectedGroupId(id));
     navigation.navigate("GroupStack", {
       screen: "EditGroup",
+      initial: false,
     });
   };
 

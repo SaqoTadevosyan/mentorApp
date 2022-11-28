@@ -60,7 +60,7 @@ export default function TabBar({
                   styles.label,
                 ]}
               >
-                {label}
+                {`${label}`}
               </Text>
             </>
           </TouchableOpacity>

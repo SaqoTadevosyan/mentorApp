@@ -8,19 +8,19 @@ import {
   useNavigation,
   StackActions,
 } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FormProvider, useForm } from "react-hook-form";
-import uuid from "react-native-uuid";
 import { useDispatch, useSelector } from "react-redux";
 
 import GroupForm from "../Components/Forms/GroupForm";
 import MainLayout from "../Layouts/MainLayout";
 import {
-  createGroup,
   selectedGroupSelector,
   setSelectedEmployees,
   updateGroup,
 } from "../store/slices/groups";
 import { IGroup } from "../types/IGroup";
+import { RootStackParamList } from "../types/IRoute";
 import { groupSchema } from "../validation/groupValidation";
 
 export default function EditGroup() {
@@ -37,7 +37,8 @@ export default function EditGroup() {
   const dispatch = useDispatch();
   const selectedGroup: IGroup = useSelector(selectedGroupSelector);
   const isFocused = useIsFocused();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   useEffect(() => {
     if (selectedGroup) {
       methods.reset({ ...selectedGroup });

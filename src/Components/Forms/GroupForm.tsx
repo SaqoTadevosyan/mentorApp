@@ -29,7 +29,6 @@ import {
 import { IEmployer } from "../../types/IGroup";
 import EmployerCard from "../EmployerCard";
 import FormInput from "../FormInput";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function GroupForm() {
   const { control, setValue, trigger } = useFormContext();
@@ -89,8 +88,6 @@ export default function GroupForm() {
       <View
         style={{
           flex: 1,
-          justifyContent: "space-between",
-          paddingBottom: 20,
         }}
       >
         <DraggableFlatList
@@ -105,7 +102,7 @@ export default function GroupForm() {
       <Portal>
         <Modalize
           ref={modalizeRef}
-          modalStyle={{ marginTop: 200, padding: 10, zIndex: 999999999 }}
+          modalStyle={{ marginTop: 200, padding: 10 }}
           scrollViewProps={{
             showsVerticalScrollIndicator: false,
             contentContainerStyle: {

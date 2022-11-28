@@ -10,6 +10,7 @@ import {
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,10 +19,12 @@ import { LeftIcon } from "../Icons/ProfileIcons";
 import MainLayout from "../Layouts/MainLayout";
 import { setUserInfo, userProfileSelector } from "../store/slices/profile";
 import { IUser } from "../types/IProfile";
+import { RootStackParamList } from "../types/IRoute";
 import { profileSchema } from "../validation/profileSchema";
 
 export default function EditProfile() {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const dispatch = useDispatch();
   const userProfile: IUser = useSelector(userProfileSelector);
 

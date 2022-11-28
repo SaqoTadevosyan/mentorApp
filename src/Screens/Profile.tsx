@@ -4,7 +4,6 @@ import {
   Alert,
   FlatList,
   Image,
-  ScrollView,
   Share,
   StyleSheet,
   Text,
@@ -13,6 +12,7 @@ import {
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Popover from "react-native-popover-view";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,9 +24,11 @@ import { groupsSelector, setEmployees } from "../store/slices/groups";
 import { logOut, userProfileSelector } from "../store/slices/profile";
 import { IGroup } from "../types/IGroup";
 import { IUser } from "../types/IProfile";
+import { RootStackParamList } from "../types/IRoute";
 
 export default function Profile() {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [showPopover, setShowPopover] = useState(false);
   const userProfile: IUser = useSelector(userProfileSelector);
   const groups: IGroup[] = useSelector(groupsSelector);
@@ -53,11 +55,12 @@ export default function Profile() {
           <Text style={[styles.headerTitle]}>Profile</Text>
           <View style={styles.actionsContainer}>
             <TouchableOpacity
-              style={{
-                marginRight: 15,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              style={[
+                {
+                  marginRight: 15,
+                },
+                styles.center,
+              ]}
               onPress={onShare}
             >
               {ShareIcon}
@@ -68,23 +71,14 @@ export default function Profile() {
               from={
                 <TouchableOpacity
                   onPress={() => setShowPopover(true)}
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
+                  style={styles.center}
                 >
                   <MoreIcon />
                 </TouchableOpacity>
               }
             >
               <TouchableOpacity
-                style={{
-                  paddingHorizontal: 20,
-                  paddingVertical: 10,
-                  flex: 2,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#F5F8FF",
-                }}
+                style={styles.editProfile}
                 onPress={() => {
                   setShowPopover(false);
                   navigation.navigate("ProfileStack", {
@@ -152,6 +146,14 @@ export default function Profile() {
 }
 
 const styles = StyleSheet.create({
+  editProfile: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    flex: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: "#F5F8FF",
+  },
+  center: { alignItems: "center", justifyContent: "center" },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
