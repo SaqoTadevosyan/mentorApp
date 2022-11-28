@@ -16,7 +16,7 @@ const initialState: stateType = {
   selectedGroupId: "",
 };
 
-export const getGroups = createAsyncThunk("group/get", async group => {
+export const getGroups = createAsyncThunk("group/get", async () => {
   const res = await AsyncStorage.getItem("groups");
   const groups = res ? JSON.parse(res) : [];
   return groups;

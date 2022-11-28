@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useDispatch, useSelector } from "react-redux";
 
 import CreateProfile from "../Screens/CreateProfile";
-import EditGroup from "../Screens/EditGroup";
 import EditProfile from "../Screens/EditProfile";
 import Profile from "../Screens/Profile";
 import { getGroups } from "../store/slices/groups";

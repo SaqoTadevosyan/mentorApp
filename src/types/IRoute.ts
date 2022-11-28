@@ -1,5 +1,6 @@
 type NestedStackParams = {
   screen: string;
+  initial?: boolean;
 };
 
 export type RootStackParamList = {

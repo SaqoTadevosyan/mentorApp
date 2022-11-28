@@ -38,7 +38,7 @@ export const profileSlice = createSlice({
       state.userInfo = action.payload;
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
-      state.userInfo = JSON.parse(action.payload);
+      state.userInfo = JSON.parse(action.payload || "");
     });
     builder.addCase(logOut.fulfilled, state => {
       state.userInfo = null;
@@ -49,6 +49,6 @@ export const profileSlice = createSlice({
 export const { setUserInfo } = profileSlice.actions;
 
 //Selectors
-export const userProfileSelector = state => state.profile.userInfo;
+export const userProfileSelector = (state: any) => state.profile.userInfo;
 
 export default profileSlice.reducer;
